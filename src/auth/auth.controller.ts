@@ -7,19 +7,14 @@ export class AuthController {
 
   @Post('register')
   register(
-    @Body('name') name: string,
-    @Body('email') email: string,
-    @Body('password') password: string,
+    @Body()
+    body: { email: string; name: string; password: string; role?: 'USER' | 'ADMIN' },
   ) {
-    return this.authService.register(name, email, password);
+    return this.authService.register(body);
   }
 
   @Post('login')
-  login(
-    @Body('email') email: string,
-    @Body('password') password: string,
-  ) {
-    return this.authService.login(email, password);
+  login(@Body() body: { email: string; password: string }) {
+    return this.authService.login(body.email, body.password);
   }
 }
-
