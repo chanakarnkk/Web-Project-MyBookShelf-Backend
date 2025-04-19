@@ -1,3 +1,4 @@
+
 import {
   Controller,
   Get,
@@ -6,6 +7,7 @@ import {
   Param,
   Put,
   Delete,
+  Request
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -29,6 +31,12 @@ export class UsersController {
   @Roles('ADMIN')
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @Get('profile')
+  @UseGuards(JwtAuthGuard)
+  getProfile(@Request() req) {
+    return this.usersService.findById(req.user.userId);
   }
 
   @Get(':email')
